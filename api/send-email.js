@@ -72,7 +72,7 @@ export default async function handler(req, res) {
         await transporter.sendMail({
             from: `"Tranquility Compassion" <${process.env.EMAIL_SERVER_USER}>`,
             to: email,
-            subject: 'Thank you for contacting Tranquility Care',
+            subject: 'Thank you for contacting Tranquility Compassion',
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
                     <div style="background-color: #56938e; padding: 25px; text-align: center;">
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
                     <div style="padding: 25px; background-color: #ffffff; line-height: 1.6;">
                         <p>Dear ${firstName},</p>
                         
-                        <p>Thank you for reaching out to Tranquility Care. We've received your message and our care team will review it shortly. You can expect a response within 24 hours.</p>
+                        <p>Thank you for reaching out to Tranquility Compassion. We've received your message and our Compassion team will review it shortly. You can expect a response within 24 hours.</p>
                         
                         <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #56938e; margin: 20px 0;">
                             <h3 style="margin-top: 0; color: #2c3e50;">Your Message Details:</h3>
@@ -93,7 +93,7 @@ export default async function handler(req, res) {
                         
                         <p>If you have any urgent questions or need immediate assistance, please don't hesitate to call our support line at <strong>647-261-2119</strong>.</p>
                         
-                        <p>We look forward to serving you and helping you find the peace and care you deserve.</p>
+                        <p>We look forward to serving you and helping you find the peace and Compassion you deserve.</p>
                     </div>
                     
                     <div style="padding: 20px; background-color: #f8f9fa; text-align: center; border-top: 1px solid #ddd;">
