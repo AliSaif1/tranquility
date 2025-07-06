@@ -32,8 +32,8 @@ export default async function handler(req, res) {
 
         // Send email to your team (internal notification)
         await transporter.sendMail({
-            from: `"Website Contact Form" <${process.env.EMAIL_FROM}>`,
-            to: process.env.EMAIL_TO,
+            from: `"Website Contact Form" <${process.env.EMAIL_SERVER_USER}>`,
+            to: process.env.EMAIL_SERVER_USER,
             subject: `New Contact Form Submission: ${subject}`,
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -70,7 +70,7 @@ export default async function handler(req, res) {
 
         // Send confirmation email to the client
         await transporter.sendMail({
-            from: `"Tranquility Care" <${process.env.EMAIL_FROM}>`,
+            from: `"Tranquility Care" <${process.env.EMAIL_SERVER_USER}>`,
             to: email,
             subject: 'Thank you for contacting Tranquility Care',
             html: `
