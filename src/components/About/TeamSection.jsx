@@ -22,7 +22,7 @@ export function TeamSection() {
                         <div className="flex flex-col lg:flex-row">
                             <div className="lg:w-2/5 relative">
                                 <img 
-                                    src="/michelle.jpg" 
+                                    src="/michelle.jpeg" 
                                     alt="Michelle Miller" 
                                     className="w-full h-full object-cover min-h-[350px]"
                                 />
