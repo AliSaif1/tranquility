@@ -37,7 +37,7 @@ export default async function handler(req, res) {
             subject: `New Contact Form Submission: ${subject}`,
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <div style="background-color: #f8f9fa; padding: 20px; border-bottom: 4px solid #4a89dc;">
+                    <div style="background-color: #f8f9fa; padding: 20px; border-bottom: 4px solid #56938e;">
                         <h2 style="color: #2c3e50; margin: 0;">New Contact Form Submission</h2>
                     </div>
                     <div style="padding: 20px; background-color: #ffffff;">
@@ -70,12 +70,12 @@ export default async function handler(req, res) {
 
         // Send confirmation email to the client
         await transporter.sendMail({
-            from: `"Tranquility Care" <${process.env.EMAIL_SERVER_USER}>`,
+            from: `"Tranquility Compassion" <${process.env.EMAIL_SERVER_USER}>`,
             to: email,
             subject: 'Thank you for contacting Tranquility Care',
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
-                    <div style="background-color: #4a89dc; padding: 25px; text-align: center;">
+                    <div style="background-color: #56938e; padding: 25px; text-align: center;">
                         <h1 style="color: white; margin: 0;">Thank You for Contacting Us</h1>
                     </div>
                     
@@ -84,7 +84,7 @@ export default async function handler(req, res) {
                         
                         <p>Thank you for reaching out to Tranquility Care. We've received your message and our care team will review it shortly. You can expect a response within 24 hours.</p>
                         
-                        <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #4a89dc; margin: 20px 0;">
+                        <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #56938e; margin: 20px 0;">
                             <h3 style="margin-top: 0; color: #2c3e50;">Your Message Details:</h3>
                             <p><strong>Subject:</strong> ${subject}</p>
                             <p><strong>Message:</strong></p>
@@ -97,20 +97,20 @@ export default async function handler(req, res) {
                     </div>
                     
                     <div style="padding: 20px; background-color: #f8f9fa; text-align: center; border-top: 1px solid #ddd;">
-                        <img src="https://www.tranquilitycare.com/logo.png" alt="Tranquility Care Logo" style="max-width: 150px; height: auto; margin-bottom: 15px;">
+                        <img src="https://www.tranquilitycompassion.ca/logo.png" alt="Tranquility Compassion Logo" style="max-width: 150px; height: auto; margin-bottom: 15px;">
                         
                         <div style="margin-bottom: 15px;">
-                            <p style="margin: 5px 0;"><strong>Tranquility Care</strong></p>
+                            <p style="margin: 5px 0;"><strong>Tranquility Compassion</strong></p>
                             <p style="margin: 5px 0;">915-135 James St. South</p>
                             <p style="margin: 5px 0;">Hamilton, Ontario L8P-2Z6</p>
                             <p style="margin: 5px 0;">Phone: 647-261-2119</p>
-                            <p style="margin: 5px 0;">Email: contact@tranquilitycare.com</p>
+                            <p style="margin: 5px 0;">Email: contact@tranquilitycompassion.ca</p>
                         </div>
                         
                         <div style="margin-top: 15px;">
-                            <a href="https://www.tranquilitycare.com" style="color: #4a89dc; text-decoration: none; margin: 0 10px;">Website</a>
-                            <a href="#" style="color: #4a89dc; text-decoration: none; margin: 0 10px;">Privacy Policy</a>
-                            <a href="#" style="color: #4a89dc; text-decoration: none; margin: 0 10px;">Care Services</a>
+                            <a href="https://www.tranquilitycompassion.ca" style="color: #56938e; text-decoration: none; margin: 0 10px;">Website</a>
+                            <a href="#" style="color: #56938e; text-decoration: none; margin: 0 10px;">Privacy Policy</a>
+                            <a href="#" style="color: #56938e; text-decoration: none; margin: 0 10px;">Care Services</a>
                         </div>
                     </div>
                 </div>
