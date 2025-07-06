@@ -1,4 +1,4 @@
-import { createTransport } from 'nodemailer';
+import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
             });
         }
 
-        const transporter = createTransport({
+        const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: process.env.EMAIL_SERVER_USER,
