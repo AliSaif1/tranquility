@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 // Components/Home/HeroSection.jsx
 export function HeroSection() {
     return (
@@ -5,7 +7,7 @@ export function HeroSection() {
             {/* Background Image with Overlay */}
             <div className="absolute inset-0">
                 <img
-                    src="/hero-background.png"
+                    src="/hero-background.jpg"
                     alt="Tranquility Home"
                     className="w-full h-full object-cover object-center"
                     loading="eager"
@@ -29,10 +31,10 @@ export function HeroSection() {
                         Explore Services
                     </a>
                     <a
-                        href="/contact"
+                        href="tel:+16472612119"
                         className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 text-lg"
                     >
-                        Contact Us
+                        Call Now
                     </a>
                 </div>
             </div>
@@ -60,31 +62,31 @@ export function FeaturesSection() {
     const features = [
         {
             icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
             ),
-            title: "Premium Quality",
-            description: "Our services are crafted with the highest standards to ensure your complete satisfaction."
+            title: "Personal Care",
+            description: "Assistance with daily living activities including bathing, dressing, grooming, and mobility support to maintain dignity and independence.",
         },
         {
+            title: "Companionship",
+            description: "Meaningful social interaction and emotional support to combat loneliness and improve overall wellbeing.",
             icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
-            ),
-            title: "Exceptional Value",
-            description: "We offer competitive pricing without compromising on the quality of our services."
+            )
         },
         {
+            title: "Meal Preparation",
+            description: "Nutritionally balanced meal planning and preparation tailored to dietary needs and personal preferences.",
             icon: (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-            ),
-            title: "Trusted Expertise",
-            description: "Years of experience and countless satisfied clients speak to our reliability."
-        }
+            )
+        },
     ];
 
     return (
@@ -92,7 +94,7 @@ export function FeaturesSection() {
             <div className="container mx-auto px-6 max-w-6xl">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                        Why Choose <span className="text-primary-600">Tranquility</span>
+                        Our <span className="text-primary-600">Services</span>
                     </h2>
                     <div className="w-20 h-1 bg-primary-600 mx-auto"></div>
                 </div>
@@ -114,22 +116,266 @@ export function FeaturesSection() {
 
 // Components/Home/CTASection.jsx
 export function CTASection() {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        service: '',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState({ title: '', message: '', isError: false });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    phone: formData.phone,
+                    subject: formData.service || 'Service Inquiry',
+                    message: formData.message,
+                    consent: true // Assuming consent is implied by form submission
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to send message');
+            }
+
+            // Show success modal
+            setModalContent({
+                title: 'Message Sent Successfully!',
+                message: 'Thank you for contacting us. We will get back to you within 24 hours.',
+                isError: false
+            });
+            setShowModal(true);
+
+            // Reset form
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                service: '',
+                message: ''
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            // Show error modal
+            setModalContent({
+                title: 'Error Sending Message',
+                message: error.message || 'There was an error sending your message. Please try again later or contact us directly at contact@tranquilitycare.com.',
+                isError: true
+            });
+            setShowModal(true);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
     return (
-        <section className="py-24 bg-secondary text-accent-700">
-            <div className="container mx-auto px-6 text-center">
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                        Ready to Experience Tranquility?
-                    </h2>
-                    <p className="text-xl text-primary-600 mb-10 leading-relaxed">
-                        Contact us today to schedule a consultation and begin your journey to peace and serenity.
-                    </p>
-                    <a
-                        href="/contact"
-                        className="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200 text-lg shadow-md hover:shadow-lg"
-                    >
-                        Get Started Now
-                    </a>
+        <section className="py-24 bg-secondary text-accent-700 relative">
+            {/* Modal Popup */}
+            {showModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative">
+                        <button
+                            onClick={closeModal}
+                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
+                        <div className={`mx-auto flex items-center justify-center h-12 w-12 rounded-full ${modalContent.isError ? 'bg-red-100' : 'bg-green-100'}`}>
+                            {modalContent.isError ? (
+                                <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            ) : (
+                                <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                            )}
+                        </div>
+
+                        <div className="mt-3 text-center sm:mt-5">
+                            <h3 className={`text-lg leading-6 font-medium ${modalContent.isError ? 'text-red-800' : 'text-green-800'}`}>
+                                {modalContent.title}
+                            </h3>
+                            <div className="mt-2">
+                                <p className="text-sm text-gray-600">
+                                    {modalContent.message}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="mt-5 sm:mt-6">
+                            <button
+                                type="button"
+                                onClick={closeModal}
+                                className={`inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 ${modalContent.isError ? 'bg-red-600 hover:bg-red-700' : 'bg-primary-600 hover:bg-primary-700'} text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${modalContent.isError ? 'focus:ring-red-500' : 'focus:ring-primary-500'} sm:text-sm transition-colors duration-300`}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="container mx-auto px-6">
+                <div className="max-w-6xl mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                            Ready to Experience Tranquility?
+                        </h2>
+                        <p className="text-xl text-primary-600 max-w-2xl mx-auto leading-relaxed">
+                            Contact us today to schedule a consultation and begin your journey to peace and serenity.
+                        </p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+                        <h3 className="text-2xl font-bold mb-6 text-gray-800 text-center">Contact Us</h3>
+                        <form className="space-y-6" onSubmit={handleSubmit}>
+                            {/* Row 1: First Name and Last Name */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name*</label>
+                                    <input
+                                        type="text"
+                                        id="firstName"
+                                        name="firstName"
+                                        value={formData.firstName}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name*</label>
+                                    <input
+                                        type="text"
+                                        id="lastName"
+                                        name="lastName"
+                                        value={formData.lastName}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Row 2: Email and Phone */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email*</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Row 3: Service/Subject (full width) */}
+                            <div>
+                                <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-1">Service/Subject</label>
+                                <select
+                                    id="service"
+                                    name="service"
+                                    value={formData.service}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                >
+                                    <option value="">Select a service</option>
+                                    <option value="consultation">Consultation</option>
+                                    <option value="therapy">Therapy</option>
+                                    <option value="wellness">Wellness Program</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            {/* Row 4: Message (full width) */}
+                            <div>
+                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message*</label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    rows="4"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            {/* Buttons */}
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className={`bg-primary-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors duration-200 text-lg shadow-md hover:shadow-lg flex-1 flex items-center justify-center ${isSubmitting ? 'opacity-75' : ''}`}
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Sending...
+                                        </>
+                                    ) : 'Send Message'}
+                                </button>
+                                <a
+                                    href="tel:+16472612119"
+                                    className="bg-secondary-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary-700 transition-colors duration-200 text-lg shadow-md hover:shadow-lg flex-1 text-center"
+                                >
+                                    Call Now
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>

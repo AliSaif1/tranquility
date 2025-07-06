@@ -5,7 +5,7 @@ export function MissionSection() {
                 <div className="flex flex-col md:flex-row items-center gap-12">
                     <div className="md:w-1/2">
                         <img 
-                            src="/mission-image.png" 
+                            src="/mission-image.jpg" 
                             alt="Our Mission" 
                             className="rounded-xl shadow-lg w-full h-auto"
                         />

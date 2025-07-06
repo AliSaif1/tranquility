@@ -1,11 +1,138 @@
+import { useState } from 'react';
+
 function Contact() {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+        consent: false
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState({ title: '', message: '', isError: false });
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to send message');
+            }
+
+            // Show success modal
+            setModalContent({
+                title: 'Message Sent Successfully!',
+                message: 'Thank you for contacting us. We will get back to you within 24 hours.',
+                isError: false
+            });
+            setShowModal(true);
+
+            // Reset form
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                subject: '',
+                message: '',
+                consent: false
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            // Show error modal
+            setModalContent({
+                title: 'Error Sending Message',
+                message: error.message || 'There was an error sending your message. Please try again later or contact us directly at contact@tranquilitycare.com.',
+                isError: true
+            });
+            setShowModal(true);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
     return (
-        <div className="bg-white">
+        <div className="bg-white relative">
+            {/* Modal Popup */}
+            {showModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative">
+                        <button
+                            onClick={closeModal}
+                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
+                        <div className={`mx-auto flex items-center justify-center h-12 w-12 rounded-full ${modalContent.isError ? 'bg-red-100' : 'bg-green-100'}`}>
+                            {modalContent.isError ? (
+                                <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            ) : (
+                                <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                            )}
+                        </div>
+
+                        <div className="mt-3 text-center sm:mt-5">
+                            <h3 className={`text-lg leading-6 font-medium ${modalContent.isError ? 'text-red-800' : 'text-green-800'}`}>
+                                {modalContent.title}
+                            </h3>
+                            <div className="mt-2">
+                                <p className="text-sm text-gray-600">
+                                    {modalContent.message}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="mt-5 sm:mt-6">
+                            <button
+                                type="button"
+                                onClick={closeModal}
+                                className={`inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 ${modalContent.isError ? 'bg-red-600 hover:bg-red-700' : 'bg-primary-600 hover:bg-primary-700'} text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${modalContent.isError ? 'focus:ring-red-500' : 'focus:ring-primary-500'} sm:text-sm transition-colors duration-300`}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Hero Section */}
             <section className="relative bg-primary-900 py-24 md:py-32 min-h-[600px] flex items-center justify-center md:mt-6">
                 <div className="absolute inset-0 overflow-hidden">
                     <img
-                        src="/about-hero.png"
+                        src="/about-hero.jpg"
                         alt="Caregivers helping seniors"
                         className="w-full h-full object-cover object-center opacity-40"
                         loading="eager"
@@ -48,7 +175,7 @@ function Contact() {
                             <p className="text-gray-600 mb-6">Speak directly with a care coordinator for immediate assistance.</p>
                             <div className="space-y-2">
                                 <p className="text-lg font-medium text-gray-900">General Inquiries</p>
-                                <p className="text-primary-600 text-xl">(123) 456-7890</p>
+                                <p className="text-primary-600 text-xl">647-261-2119</p>
                                 <p className="text-sm text-gray-500">Mon-Fri, 8am-6pm EST</p>
                             </div>
                         </div>
@@ -81,8 +208,8 @@ function Contact() {
                             <div className="space-y-4">
                                 <div>
                                     <p className="text-lg font-medium text-gray-900">Headquarters</p>
-                                    <p className="text-gray-700">123 Care Street, Suite 100</p>
-                                    <p className="text-gray-700">Toronto, ON M5V 2H1</p>
+                                    <p className="text-gray-700">915-135 James St. South</p>
+                                    <p className="text-gray-700">Hamilton, Ontario L8P-2Z6</p>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +227,7 @@ function Contact() {
                                 <div className="mb-8">
                                     <h2 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">Get in Touch With Our Team</h2>
                                     <p className="text-gray-600 leading-relaxed">
-                                        Complete the form and our dedicated team will respond within 24 hours. For urgent matters, please call our 24/7 support line at <span className="font-semibold text-primary-600">(555) 123-4567</span>.
+                                        Complete the form and our dedicated team will respond within 24 hours. For urgent matters, please call our 24/7 support line at <span className="font-semibold text-primary-600">647-261-2119</span>.
                                     </p>
                                 </div>
 
@@ -127,7 +254,6 @@ function Contact() {
                             </div>
                         </div>
 
-                        {/* Right Form - Compact but still professional */}
                         <div className="lg:w-1/2">
                             <div className="bg-white rounded-xl shadow-lg h-full">
                                 <div className="p-8">
@@ -136,13 +262,16 @@ function Contact() {
                                         <p className="text-gray-500 text-sm">Fields marked with * are required</p>
                                     </div>
 
-                                    <form className="space-y-4">
+                                    <form className="space-y-4" onSubmit={handleSubmit}>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
                                                 <label htmlFor="first-name" className="block text-xs font-medium text-gray-700 mb-1 uppercase tracking-wider">First Name *</label>
                                                 <input
                                                     type="text"
                                                     id="first-name"
+                                                    name="firstName"
+                                                    value={formData.firstName}
+                                                    onChange={handleChange}
                                                     className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                                                     required
                                                 />
@@ -152,6 +281,9 @@ function Contact() {
                                                 <input
                                                     type="text"
                                                     id="last-name"
+                                                    name="lastName"
+                                                    value={formData.lastName}
+                                                    onChange={handleChange}
                                                     className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                                                     required
                                                 />
@@ -163,6 +295,9 @@ function Contact() {
                                             <input
                                                 type="email"
                                                 id="email"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
                                                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                                                 required
                                             />
@@ -173,6 +308,9 @@ function Contact() {
                                             <input
                                                 type="tel"
                                                 id="phone"
+                                                name="phone"
+                                                value={formData.phone}
+                                                onChange={handleChange}
                                                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                                             />
                                         </div>
@@ -181,6 +319,9 @@ function Contact() {
                                             <label htmlFor="subject" className="block text-xs font-medium text-gray-700 mb-1 uppercase tracking-wider">Subject *</label>
                                             <select
                                                 id="subject"
+                                                name="subject"
+                                                value={formData.subject}
+                                                onChange={handleChange}
                                                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiAjdjEwMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwb2x5bGluZSBwb2ludHM9IjYgOSAxMiAxNSAxOCA5Ij48L3BvbHlsaW5lPjwvc3ZnPg==')] bg-no-repeat bg-[center_right_0.5rem]"
                                                 required
                                             >
@@ -197,7 +338,10 @@ function Contact() {
                                             <label htmlFor="message" className="block text-xs font-medium text-gray-700 mb-1 uppercase tracking-wider">Message *</label>
                                             <textarea
                                                 id="message"
+                                                name="message"
                                                 rows={4}
+                                                value={formData.message}
+                                                onChange={handleChange}
                                                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                                                 required
                                             ></textarea>
@@ -209,6 +353,8 @@ function Contact() {
                                                     id="consent"
                                                     name="consent"
                                                     type="checkbox"
+                                                    checked={formData.consent}
+                                                    onChange={handleChange}
                                                     className="focus:ring-primary-500 h-3 w-3 text-primary-600 border-gray-300 rounded"
                                                     required
                                                 />
@@ -223,9 +369,18 @@ function Contact() {
                                         <div className="pt-2">
                                             <button
                                                 type="submit"
-                                                className="w-full py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-md transition-all duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 text-sm"
+                                                disabled={isSubmitting}
+                                                className={`w-full py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-md transition-all duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 text-sm ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
                                             >
-                                                Send Message
+                                                {isSubmitting ? (
+                                                    <>
+                                                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                        </svg>
+                                                        Sending...
+                                                    </>
+                                                ) : 'Send Message'}
                                             </button>
                                         </div>
                                     </form>
