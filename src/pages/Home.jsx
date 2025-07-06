@@ -328,11 +328,12 @@ export function CTASection() {
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 >
-                                    <option value="">Select a service</option>
-                                    <option value="consultation">Consultation</option>
-                                    <option value="therapy">Therapy</option>
-                                    <option value="wellness">Wellness Program</option>
-                                    <option value="other">Other</option>
+                                    <option value="">Select a subject</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="services">Care Services</option>
+                                    <option value="billing">Billing Question</option>
+                                    <option value="employment">Employment Opportunity</option>
+                                    <option value="feedback">Feedback/Suggestion</option>
                                 </select>
                             </div>
 
