@@ -198,7 +198,7 @@ export function CTASection() {
             // Show error modal
             setModalContent({
                 title: 'Error Sending Message',
-                message: error.message || 'There was an error sending your message. Please try again later or contact us directly at contact@tranquilitycare.com.',
+                message: error.message || 'There was an error sending your message. Please try again later or contact us directly at contact@tranquilitycompassion.ca.',
                 isError: true
             });
             setShowModal(true);

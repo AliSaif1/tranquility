@@ -64,7 +64,7 @@ function Contact() {
             // Show error modal
             setModalContent({
                 title: 'Error Sending Message',
-                message: error.message || 'There was an error sending your message. Please try again later or contact us directly at contact@tranquilitycare.com.',
+                message: error.message || 'There was an error sending your message. Please try again later or contact us directly at contact@tranquilitycompassion.ca.',
                 isError: true
             });
             setShowModal(true);
@@ -191,7 +191,7 @@ function Contact() {
                             <p className="text-gray-600 mb-6">Send us your questions and we'll respond within 24 hours.</p>
                             <div className="space-y-2">
                                 <p className="text-lg font-medium text-gray-900">General Inquiries</p>
-                                <p className="text-primary-600 text-xl">contact@tranquilitycare.com</p>
+                                <p className="text-primary-600 text-xl">contact@tranquilitycompassion.ca</p>
                             </div>
                         </div>
 
