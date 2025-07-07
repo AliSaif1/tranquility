@@ -43,16 +43,25 @@ export function HeroSection() {
 }
 
 // Components/Home/FeatureCard.jsx
-export function FeatureCard({ icon, title, description }) {
+export function FeatureCard({ icon, title, description, price }) {
     return (
-        <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 h-full">
-            <div className="bg-primary-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6">
-                <div className="text-primary-600 text-3xl">
+        <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 h-full flex flex-col group">
+            <div className="bg-primary-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-200 transition-colors duration-300">
+                <div className="text-primary-600 text-3xl group-hover:text-primary-700 transition-colors duration-300">
                     {icon}
                 </div>
             </div>
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">{title}</h3>
-            <p className="text-gray-600 leading-relaxed">{description}</p>
+            <h3 className="text-xl font-semibold mb-3 text-gray-800 group-hover:text-gray-900 transition-colors duration-300">
+                {title}
+            </h3>
+            <p className="text-gray-600 leading-relaxed mb-4 flex-grow">
+                {description}
+            </p>
+            <div className="mt-auto px-0 pb-0 pt-4 bg-primary-50/30 border-t border-primary-100">
+                <p className="text-primary-700 font-bold text-lg text-center px-4 py-3">
+                    <span className="text-2xl">{price.split(' ')[0]}</span> {price.split(' ').slice(1).join(' ')}
+                </p>
+            </div>
         </div>
     );
 }
@@ -68,10 +77,12 @@ export function FeaturesSection() {
             ),
             title: "Personal Care",
             description: "Assistance with daily living activities including bathing, dressing, grooming, and mobility support to maintain dignity and independence.",
+            price: "$30.00 per hour"
         },
         {
             title: "Companionship",
             description: "Meaningful social interaction and emotional support to combat loneliness and improve overall wellbeing.",
+            price: "$35.00 per hour",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -81,6 +92,7 @@ export function FeaturesSection() {
         {
             title: "Meal Preparation",
             description: "Nutritionally balanced meal planning and preparation tailored to dietary needs and personal preferences.",
+            price: "$30.00 per hour",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -106,6 +118,7 @@ export function FeaturesSection() {
                             icon={feature.icon}
                             title={feature.title}
                             description={feature.description}
+                            price={feature.price}
                         />
                     ))}
                 </div>
