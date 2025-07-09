@@ -1,9 +1,11 @@
 function Services() {
     const services = [
         {
-            title: "Personal Care",
-            description: "Assistance with daily living activities including bathing, dressing, grooming, and mobility support to maintain dignity and independence.",
+            title: "PSW Services",
+            description:
+                "Personal non-medical support for seniors, including bathing, dressing, toileting, meal preparation, help with mobility, and medication reminders.",
             price: "$30.00 per hour",
+            originalPrice: "$35.00 per hour", // Added original price
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -11,52 +13,14 @@ function Services() {
             )
         },
         {
-            title: "Companionship",
-            description: "Meaningful social interaction and emotional support to combat loneliness and improve overall wellbeing.",
+            title: "Companionship / Respite Care",
+            description:
+                "Supervision and emotional support for seniors when loved ones are away, including meaningful interaction and light housekeeping.",
             price: "$35.00 per hour",
+            originalPrice: "$40.00 per hour", // Added original price
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-            )
-        },
-        {
-            title: "Meal Preparation",
-            description: "Nutritionally balanced meal planning and preparation tailored to dietary needs and personal preferences.",
-            price: "$30.00 per hour",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-            )
-        },
-        {
-            title: "Palliative Care",
-            description: "Compassionate support focusing on comfort and quality of life for individuals with serious illnesses.",
-            price: "$30.00 per hour",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            )
-        },
-        {
-            title: "Medication Reminder",
-            description: "Timely reminders and assistance with medication management to ensure proper dosage and schedule adherence.",
-            price: "$30.00 per hour",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                </svg>
-            )
-        },
-        {
-            title: "Respite Care",
-            description: "Temporary relief for primary caregivers, providing peace of mind that their loved ones are in capable hands.",
-            price: "$35.00 per hour",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
             )
         }
@@ -99,6 +63,7 @@ function Services() {
                             </div>
                             <div className="px-8 pb-6 pt-4 bg-primary-50/30 border-t border-primary-100">
                                 <p className="text-primary-700 font-bold text-lg">
+                                    <span className="text-gray-400 line-through mr-2 text-lg">{service.originalPrice.split(' ')[0]}</span>
                                     <span className="text-2xl">{service.price.split(' ')[0]}</span> {service.price.split(' ').slice(1).join(' ')}
                                 </p>
                             </div>
