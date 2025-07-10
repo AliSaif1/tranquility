@@ -44,7 +44,7 @@ function Contact() {
             // Show success modal
             setModalContent({
                 title: 'Message Sent Successfully!',
-                message: 'Thank you for contacting us. We will get back to you within 24 hours.',
+                message: 'Thank you for contacting us. We will get back to you within an hour.',
                 isError: false
             });
             setShowModal(true);
@@ -188,7 +188,7 @@ function Contact() {
                                 </svg>
                             </div>
                             <h3 className="text-xl font-bold text-gray-900 mb-4">By Email</h3>
-                            <p className="text-gray-600 mb-6">Send us your questions and we'll respond within 24 hours.</p>
+                            <p className="text-gray-600 mb-6">Send us your questions and we'll respond within an hour.</p>
                             <div className="space-y-2">
                                 <p className="text-lg font-medium text-gray-900">General Inquiries</p>
                                 <p className="text-primary-600 text-base break-all">contact@tranquilitycompassion.ca</p>
@@ -227,7 +227,7 @@ function Contact() {
                                 <div className="mb-8">
                                     <h2 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">Get in Touch With Our Team</h2>
                                     <p className="text-gray-600 leading-relaxed">
-                                        Complete the form and our dedicated team will respond within 24 hours. For urgent matters, please call our 24/7 support line at <span className="font-semibold text-primary-600">647-261-2119</span>.
+                                        Complete the form and our dedicated team will respond within an hour. For urgent matters, please call our 24/7 support line at <span className="font-semibold text-primary-600">647-261-2119</span>.
                                     </p>
                                 </div>
 
@@ -235,7 +235,7 @@ function Contact() {
                                     <h3 className="text-xl font-semibold text-gray-900 mb-4">What to Expect</h3>
                                     <ul className="space-y-3">
                                         {[
-                                            "Response within 24 hours during business days",
+                                            "Response within an hour during business days",
                                             "Personalized care consultation",
                                             "No obligation assessment",
                                             "Confidential and secure communication"
@@ -405,7 +405,7 @@ function Contact() {
                             {[
                                 {
                                     question: "How quickly can you arrange care services?",
-                                    answer: "We can typically arrange care services within 24-48 hours of your initial contact, depending on your specific needs and location."
+                                    answer: "We can typically arrange care services within an hour of your initial contact, depending on your specific needs and location."
                                 },
                                 {
                                     question: "Do you offer free consultations?",
