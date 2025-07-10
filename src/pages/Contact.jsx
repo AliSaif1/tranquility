@@ -191,7 +191,7 @@ function Contact() {
                             <p className="text-gray-600 mb-6">Send us your questions and we'll respond within 24 hours.</p>
                             <div className="space-y-2">
                                 <p className="text-lg font-medium text-gray-900">General Inquiries</p>
-                                <p className="text-primary-600 text-xl">contact@tranquilitycompassion.ca</p>
+                                <p className="text-primary-600 text-base break-all">contact@tranquilitycompassion.ca</p>
                             </div>
                         </div>
 
