@@ -5,7 +5,7 @@ function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
                     {/* Brand Column */}
                     <div className="space-y-4">
-                        <h3 className="text-xl font-bold tracking-tight">Tranquility</h3>
+                        <h3 className="text-xl font-bold tracking-tight">Tranquility Support Services</h3>
                         <address className="not-italic space-y-2 text-accent-100">
                             <p className="flex items-start">
                                 <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,7 @@ function Footer() {
                 {/* Copyright */}
                 <div className="border-t border-accent-light mt-12 pt-6 text-center text-accent-100">
                     <p className="text-sm">
-                        &copy; {new Date().getFullYear()} Tranquility. All rights reserved.
+                        &copy; {new Date().getFullYear()} Tranquility Support Services. All rights reserved.
                     </p>
                 </div>
             </div>
